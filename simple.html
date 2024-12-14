@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Alarm Clock</title>
+</head>
+<body>
+    <h1>Simple Alarm Clock</h1>
+    <input type="time" id="alarmTime" />
+    <button onclick="setAlarm()">Set Alarm</button>
+    <p id="message"></p>
+
+    <script>
+        let alarmTime = null;
+        const alarmSound = new Audio('mr-bean-song-ringtoneshub-189-40967.mp3'); // Beep sound URL
+
+        function setAlarm() {
+            alarmTime = document.getElementById('alarmTime').value;
+            if (alarmTime) {
+                document.getElementById('message').textContent = `Alarm set for ${alarmTime}`;
+                checkAlarm();
+            }
+        }
+
+        function checkAlarm() {
+            setInterval(function () {
+                const currentTime = new Date();
+                const currentHours = String(currentTime.getHours()).padStart(2, '0');
+                const currentMinutes = String(currentTime.getMinutes()).padStart(2, '0');
+                const currentTimeString = `${currentHours}:${currentMinutes}`;
+
+                if (currentTimeString === alarmTime) {
+                    alarmSound.play();
+                    document.getElementById('message').textContent = 'Time to Wake Up!';
+                }
+            }, 60000); // Check every minute
+        }
+    </script>
+</body>
+</html>
+
